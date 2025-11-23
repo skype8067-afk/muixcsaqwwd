@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Play Audio</title>
+  <style>
+    body { font-family: Arial, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    #playBtn { padding:12px 20px; font-size:16px; cursor:pointer; border-radius:8px; }
+    #message { margin-top:12px; color:#666; font-size:14px; text-align:center;}
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Visible fallback button shown when autoplay is blocked -->
+    <button id="playBtn" style="display:none">Play Audio</button>
+    <div id="message">Loading audio...</div>
+  </div>
+
+  <!-- audio file in audio/music.mp3 -->
+  <audio id="audio" preload="auto" playsinline>
+    <source src="audio/music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playBtn');
+    const message = document.getElementById('message');
+
+    // Try autoplay on load
+    function tryAutoplay() {
+      audio.play().then(() => {
+        message.textContent = 'Playing...';
+        playBtn.style.display = 'none';
+      }).catch((err) => {
+        // Autoplay blocked — show fallback button
+        message.textContent = 'Autoplay blocked. Tap Play.';
+        playBtn.style.display = 'inline-block';
+      });
+    }
+
+    // When user clicks Play, attempt to play and hide button
+    playBtn.addEventListener('click', async () => {
+      try {
+        await audio.play();
+        playBtn.style.display = 'none';
+        message.textContent = 'Playing...';
+      } catch (e) {
+        message.textContent = 'Unable to play — try again.';
+      }
+    });
+
+    // Attempt autoplay after small delay (gives browser time)
+    window.addEventListener('load', () => {
+      setTimeout(tryAutoplay, 300);
+    });
+  </script>
+</body>
+</html>
