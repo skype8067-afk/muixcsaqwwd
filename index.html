@@ -1,49 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Play Audio</title>
-  <style>
-    body { font-family: Arial, sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; margin:0; }
-    #unmuteBtn { padding:12px 20px; font-size:16px; cursor:pointer; border-radius:8px; margin-top:20px; display:none; }
-    #message { color:#666; font-size:14px; text-align:center; margin-top:12px; }
-  </style>
 </head>
 <body>
   <h2>Welcome</h2>
-  <div id="message">Loading audio...</div>
-  <button id="unmuteBtn">Unmute Audio</button>
+  <button id="playBtn">Play Audio</button>
 
-  <audio id="audio" autoplay muted loop>
-    <source src="audio/yourfile.mp3" type="audio/mpeg" />
+  <audio id="audio" preload="none">
+    <source src="audio/music.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
     const audio = document.getElementById('audio');
-    const unmuteBtn = document.getElementById('unmuteBtn');
-    const message = document.getElementById('message');
+    const playBtn = document.getElementById('playBtn');
 
-    window.addEventListener('load', () => {
-      audio.play().then(() => {
-        message.textContent = 'Audio is playing muted.';
-        unmuteBtn.style.display = 'inline-block';
-      }).catch(() => {
-        message.textContent = 'Autoplay blocked. Tap Unmute to play audio.';
-        unmuteBtn.style.display = 'inline-block';
-      });
-    });
-
-    unmuteBtn.addEventListener('click', async () => {
-      audio.muted = false;
-      try {
-        await audio.play();
-        message.textContent = 'Audio is now playing!';
-        unmuteBtn.style.display = 'none';
-      } catch {
-        message.textContent = 'Unable to play audio. Try again.';
-      }
+    playBtn.addEventListener('click', () => {
+      audio.play();
     });
   </script>
 </body>
