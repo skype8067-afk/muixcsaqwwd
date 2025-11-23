@@ -16,7 +16,7 @@
   <button id="unmuteBtn">Unmute Audio</button>
 
   <audio id="audio" autoplay muted loop>
-    <source src="audio/music.mp3" type="audio/mpeg" />
+    <source src="audio/yourfile.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 
@@ -26,10 +26,8 @@
     const message = document.getElementById('message');
 
     window.addEventListener('load', () => {
-      // Attempt autoplay (muted)
       audio.play().then(() => {
         message.textContent = 'Audio is playing muted.';
-        // Show unmute button
         unmuteBtn.style.display = 'inline-block';
       }).catch(() => {
         message.textContent = 'Autoplay blocked. Tap Unmute to play audio.';
@@ -37,7 +35,6 @@
       });
     });
 
-    // When user clicks Unmute
     unmuteBtn.addEventListener('click', async () => {
       audio.muted = false;
       try {
